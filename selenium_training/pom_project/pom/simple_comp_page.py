@@ -11,8 +11,13 @@ class Simple_Comp:
         self.ac = ActionChains(driver)
 
     def choose_processor(self):
-        # self.driver.find_element('xpath', '//label[@for="product_attribute_75_5_31_96"]').click()
-        self.driver.find_element(*loc.processor).click()
+        from selenium.webdriver.support.ui import WebDriverWait
+        from selenium.webdriver.support import expected_conditions as EC
+    
+        ele = WebDriverWait(self.driver,10).until(
+        EC.element_to_be_clickable(loc.processor)
+        )
+        ele.click()
         time.sleep(2)
 
     def click_to_addtocart(self):
