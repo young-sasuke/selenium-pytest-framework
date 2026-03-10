@@ -12,12 +12,17 @@ class CartPage:
 
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, 20)
+        self.wait = WebDriverWait(driver, 30)
 
     def select_country(self, country):
 
+        # wait until shopping cart page loads
+        self.wait.until(
+            EC.url_contains("cart")
+        )
+
         country_select = self.wait.until(
-            EC.presence_of_element_located(loc.country_data)
+            EC.element_to_be_clickable(loc.country_data)
         )
 
         select_country = Select(country_select)
@@ -28,7 +33,7 @@ class CartPage:
     def select_state(self):
 
         state_select = self.wait.until(
-            EC.presence_of_element_located(loc.state_data)
+            EC.element_to_be_clickable(loc.state_data)
         )
 
         select_state = Select(state_select)
@@ -39,7 +44,7 @@ class CartPage:
     def enter_post(self, pincode):
 
         post = self.wait.until(
-            EC.presence_of_element_located(loc.postalcode)
+            EC.visibility_of_element_located(loc.postalcode)
         )
 
         post.clear()
