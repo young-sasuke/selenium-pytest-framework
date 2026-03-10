@@ -17,20 +17,35 @@ class Simple_Comp:
         self.wait = WebDriverWait(driver, 20)
 
     def choose_processor(self):
+
+        # wait for page to load
+        self.wait.until(
+            EC.presence_of_element_located(loc.processor)
+        )
+
         ele = self.wait.until(
             EC.element_to_be_clickable(loc.processor)
         )
+
+        # scroll to element (important for headless)
+        self.driver.execute_script("arguments[0].scrollIntoView();", ele)
+
         ele.click()
+
         time.sleep(2)
 
     def click_to_addtocart(self):
-        # self.driver.find_element('xpath', '//input[@id="add-to-cart-button-75"]').click()
+
         ele = self.wait.until(
             EC.element_to_be_clickable(loc.addtocart_btn)
         )
+
         ele.click()
+
         time.sleep(2)
 
     def go_to_home(self):
+
         self.ac.send_keys(Keys.HOME).perform()
+
         time.sleep(2)
