@@ -8,27 +8,26 @@ from selenium_training.pom_project.object_repository.simpcomp_page_locators impo
 
 loc = SimpCompPageLocators()
 
-
 class Simple_Comp:
 
     def __init__(self, driver):
         self.driver = driver
         self.ac = ActionChains(driver)
-        self.wait = WebDriverWait(driver, 20)
+        self.wait = WebDriverWait(driver, 30)
 
     def choose_processor(self):
 
-        # wait for page to load
+        # wait until simple computer page loads
         self.wait.until(
-            EC.presence_of_element_located(loc.processor)
+            EC.url_contains("simple-computer")
         )
 
         ele = self.wait.until(
             EC.element_to_be_clickable(loc.processor)
         )
 
-        # scroll to element (important for headless)
-        self.driver.execute_script("arguments[0].scrollIntoView();", ele)
+        # scroll to element (important in CI)
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", ele)
 
         ele.click()
 
@@ -39,6 +38,8 @@ class Simple_Comp:
         ele = self.wait.until(
             EC.element_to_be_clickable(loc.addtocart_btn)
         )
+
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", ele)
 
         ele.click()
 
