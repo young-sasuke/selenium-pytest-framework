@@ -31,6 +31,20 @@ class HomePage:
         self.driver.get("https://demowebshop.tricentis.com/desktops")
         time.sleep(4)
 
+    
     def click_to_soppingcart(self):
-        self.driver.find_element(*loc.shopping_cart).click()
-        time.sleep(3)
+        wait = WebDriverWait(self.driver, 20)
+
+        cart = wait.until(
+        EC.element_to_be_clickable(loc.shopping_cart)
+        )
+
+    # scroll to element (important for CI)
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", cart)
+
+    # JS click for Jenkins/headless
+        self.driver.execute_script("arguments[0].click();", cart)
+
+        wait.until(
+        EC.url_contains("cart")
+       )
