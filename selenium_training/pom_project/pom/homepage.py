@@ -28,8 +28,7 @@ class HomePage:
         time.sleep(2)
 
     def click_to_desktop(self):
-        ele = self.wait.until(EC.visibility_of_element_located(loc.desktops))
-        ele.click()
+        self.driver.get("https://demowebshop.tricentis.com/desktops")
         time.sleep(4)
 
     def click_to_soppingcart(self):
